@@ -3,10 +3,8 @@ I am able to represent a compiled method and, collaborating with an handler, I c
 "
 Class {
 	#name : #MTTracker,
-	#superclass : #Object,
+	#superclass : #MpMethodProxyWithContext,
 	#instVars : [
-		'compiledMethod',
-		'handler',
 		'session'
 	],
 	#category : #MethodTracker
@@ -35,101 +33,27 @@ MTTracker class >> reset [
 { #category : #initialization }
 MTTracker >> compiledMethod [
 
-	^ compiledMethod
+	^ self wrappedMethod
 ]
 
 { #category : #initialization }
 MTTracker >> compiledMethod: aCompiledMethod [
 
-	compiledMethod := aCompiledMethod
-]
-
-{ #category : #private }
-MTTracker >> doesNotUnderstand: aMessage [
-
-	^ compiledMethod
-		  perform: aMessage selector
-		  withArguments: aMessage arguments
-]
-
-{ #category : #accessing }
-MTTracker >> handler: anObject [
-
-	handler := anObject
+	self
+		class: aCompiledMethod methodClass
+		selector: aCompiledMethod selector
 ]
 
 { #category : #private }
 MTTracker >> ifInstalled: iBlock ifNotInstalled: niBlock [
 
-	^ compiledMethod methodClass methodDict
-		  at: compiledMethod selector
+	^ self compiledMethod methodClass methodDict
+		  at: self compiledMethod selector
 		  ifPresent: [ :aMethod | 
 			  aMethod == self
 				  ifTrue: iBlock
 				  ifFalse: niBlock ]
 		  ifAbsent: [ Error signal ]
-]
-
-{ #category : #actions }
-MTTracker >> install [
-
-	self
-		ifInstalled: [ Warning signal: 'Already installed wrapper.' ]
-		ifNotInstalled: [ self put: self ]
-]
-
-{ #category : #printing }
-MTTracker >> printOn: aStream [
-
-	aStream nextPutAll: '[ '.
-
-	self
-		ifInstalled: [ compiledMethod printOn: aStream ]
-		ifNotInstalled: [ 
-			aStream
-				print: compiledMethod methodClass;
-				nextPutAll: ' • ';
-				print: compiledMethod selector ].
-
-	aStream nextPutAll: ' ] π'
-]
-
-{ #category : #actions }
-MTTracker >> put: aMethod [
-
-	compiledMethod methodClass methodDict
-		at: compiledMethod selector put: aMethod;
-		rehash
-]
-
-{ #category : #evaluation }
-MTTracker >> run: aSelector with: anArray in: aReceiver [
-
-	self assert: aSelector = compiledMethod selector.
-
-	^ session
-		  run: aSelector
-		  with: anArray
-		  in: aReceiver
-		  context: thisContext
-		  tracker: self
-]
-
-{ #category : #'as yet unclassified' }
-MTTracker >> run: aSelector with: anArray in: aReceiver context: aContext notSuspended: aBoolean [
-
-	^ handler
-		  run: aSelector
-		  with: anArray
-		  in: aReceiver
-		  context: aContext
-		  tracker: self
-]
-
-{ #category : #'as yet unclassified' }
-MTTracker >> run: aSelector with: anArray in: aReceiver context: aContext suspended: aBoolean [
-
-	^ self valueWithReceiver: aReceiver arguments: anArray
 ]
 
 { #category : #accessing }
@@ -138,25 +62,12 @@ MTTracker >> session: anObject [
 	session := anObject
 ]
 
-{ #category : #actions }
-MTTracker >> uninstall [
-
-	self
-		ifInstalled: [ self put: compiledMethod ]
-		ifNotInstalled: [ 
-		Warning signal: 'Attempted to uninstall a not installed wrapper.' ]
-]
-
-{ #category : #evaluation }
-MTTracker >> valueWithReceiver: aReceiver arguments: anArray [
-
-	^ aReceiver withArgs: anArray executeMethod: compiledMethod
-]
-
 { #category : #evaluation }
 MTTracker >> withSuspendWrapping: aBlock context: aContext [
 
-	session pushContext: aContext.
+	"session pushContext: aContext.
 
-	^ [ aBlock cull: session ] ensure: [ session popContext: aContext ]
+	^ [ aBlock cull: session ] ensure: [ session popContext: aContext ]"
+
+	^ aBlock cull: session
 ]

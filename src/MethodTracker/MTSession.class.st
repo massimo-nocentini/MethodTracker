@@ -9,9 +9,6 @@ Class {
 		'trackers',
 		'home'
 	],
-	#classVars : [
-		'forbiddenMethods'
-	],
 	#category : #MethodTracker
 }
 
@@ -19,9 +16,7 @@ Class {
 MTSession class >> compiledMethods: aCollection thenSelect: methodBlock [
 
 	| methods session |
-	methods := aCollection select: [ :each | 
-		           (forbiddenMethods includes: each) not and: [ 
-			           methodBlock value: each ] ].
+	methods := aCollection select: methodBlock.
 
 	session := self new.
 
@@ -56,33 +51,6 @@ MTSession class >> forPackages: aCollection selectMethod: methodBlock [
 	^ self compiledMethods: methods thenSelect: methodBlock
 ]
 
-{ #category : #API }
-MTSession class >> initialize [
-
-	forbiddenMethods := Set new
-		                    add: MTTracker >> #run:with:in:;
-		                    add: MTSession >> #run:with:in:context:tracker:;
-		                    add:
-			                    MTTracker >> #run:with:in:context:suspended:;
-		                    add:
-			                    MTTracker >> #run:with:in:context:notSuspended:;
-		                    addAll:
-			                    (MTHandler >> #run:with:in:context:tracker:)
-				                    allImplementations;
-		                    addAll:
-			                    (MTHandlerPrePostPlugging
-			                     >> #run:with:in:preContext:tracker:)
-				                    allImplementations;
-		                    addAll: (MTHandlerPrePostPlugging
-			                     >>
-				                     #run:with:in:postContext:tracker:carry:return:)
-				                    allImplementations;
-		                    add: MTTracker >> #valueWithReceiver:arguments:;
-		                    add: ProtoObject >> #withArgs:executeMethod:;
-		                    add: MTTracker >> #withSuspendWrapping:context:;
-		                    yourself
-]
-
 { #category : #'instance creation' }
 MTSession class >> withAll: aCollection [
 
@@ -104,13 +72,10 @@ MTSession >> add: aTracker [
 	| compiledMethod |
 	compiledMethod := aTracker compiledMethod.
 
-	^ (forbiddenMethods includes: compiledMethod)
-		  ifTrue: [ Object new ]
-		  ifFalse: [ 
-			  trackers at: compiledMethod ifAbsentPut: [ 
-				  aTracker
-					  session: self;
-					  yourself ] ]
+	^ trackers at: compiledMethod ifAbsentPut: [ 
+		  aTracker
+			  session: self;
+			  yourself ]
 ]
 
 { #category : #enumerating }
@@ -127,38 +92,6 @@ MTSession >> initialize [
 	trackers := Dictionary new.
 
 	stackCounter := 0
-]
-
-{ #category : #'as yet unclassified' }
-MTSession >> popContext: aContext [
-
-	stackCounter := stackCounter - 1
-]
-
-{ #category : #'as yet unclassified' }
-MTSession >> pushContext: aContext [
-
-	stackCounter := stackCounter + 1
-]
-
-{ #category : #API }
-MTSession >> run: aSelector with: anArray in: aReceiver context: aContext tracker: aTracker [
-
-	^ (stackCounter = 0 and: [ aContext hasSender: home ])
-		  ifTrue: [ 
-			  aTracker
-				  run: aSelector
-				  with: anArray
-				  in: aReceiver
-				  context: aContext
-				  notSuspended: true ]
-		  ifFalse: [ 
-			  aTracker
-				  run: aSelector
-				  with: anArray
-				  in: aReceiver
-				  context: aContext
-				  suspended: false ]
 ]
 
 { #category : #accessing }
