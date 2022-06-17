@@ -218,7 +218,7 @@ MTHandlerTest >> testCountFooSingleTracker [
 
 	self deny: tracker isInstalled.
 
-	self assert: handler count equals: 0
+	self assert: handler count equals: 1
 ]
 
 { #category : #tests }
