@@ -36,7 +36,7 @@ MTHandlerPrePostPlugging >> beforeExecutionWithReceiver: receiver arguments: arg
 { #category : #'as yet unclassified' }
 MTHandlerPrePostPlugging >> run: aSelector with: anArray in: aReceiver postContext: aContext tracker: aTracker carry: carry return: result [
 
-	
+	^ result
 ]
 
 { #category : #'as yet unclassified' }

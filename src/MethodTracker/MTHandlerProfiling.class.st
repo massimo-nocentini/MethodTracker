@@ -113,7 +113,9 @@ MTHandlerProfiling >> run: aSelector with: anArray in: aReceiver postContext: aC
 
 	timed
 		result: result asJustMaybe asCategory;
-		duration: duration
+		duration: duration.
+
+	^ result
 ]
 
 { #category : #hooks }
