@@ -26,10 +26,7 @@ MTHandlerSenderPropagating >> run: aSelector with: anArray in: aReceiver context
 			| tracker additionWitness walkedContext |
 			walkedContext := walkBlock value: aContext.
 
-			tracker := MTTracker new
-				           compiledMethod: walkedContext;
-				           handler: self;
-				           yourself.
+			tracker := MTTracker onMethod: walkedContext handler: self.
 
 			additionWitness := session add: tracker.
 

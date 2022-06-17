@@ -36,7 +36,7 @@ MTHandlerTest >> exampleOpalCompiler [
 
 	(MTOverviewSpPresenter on: observedData)
 		umlSequenceDiagramBuilder: RSUMLSequenceBuilder new;
-		openWithSpec
+		open
 ]
 
 { #category : #tests }
@@ -202,16 +202,13 @@ MTHandlerTest >> testCountFooSingleTracker [
 	| tracker handler |
 	handler := MTHandlerCounting new.
 
-	tracker := MTTracker new
+	tracker := (MTTracker onMethod: self class >> #foo handler: handler)
 		           session: MTSession new;
-		           compiledMethod: self class >> #foo;
-		           handler: handler;
 		           yourself.
 
 	tracker install.
 
-	self assert:
-		(tracker ifInstalled: [ true ] ifNotInstalled: [ false ]).
+	self assert: tracker isInstalled.
 
 	self assert: (self class methodDict at: #foo) equals: tracker.
 
@@ -219,7 +216,7 @@ MTHandlerTest >> testCountFooSingleTracker [
 
 	tracker uninstall.
 
-	self deny: (tracker ifInstalled: [ true ] ifNotInstalled: [ false ]).
+	self deny: tracker isInstalled.
 
 	self assert: handler count equals: 0
 ]
@@ -250,10 +247,10 @@ MTHandlerTest >> testCountIfTrueDuringSlowFactorial [
 	session := (MTSession withAllImplementations:
 			            { (Boolean >> #ifTrue:) })
 		           do: [ :each | each handler: ifTrueHandler ];
-		           add: (MTTracker new
-				            compiledMethod: Integer >> #slowFactorial;
-				            handler: handler;
-				            yourself);
+		           add:
+			           (MTTracker
+				            onMethod: Integer >> #slowFactorial
+				            handler: handler);
 		           yourself.
 
 	session value: [ 5 slowFactorial ].
@@ -269,16 +266,15 @@ MTHandlerTest >> testCountIfTrueSingleTracker [
 	| tracker handler |
 	handler := MTHandlerCounting new.
 
-	tracker := MTTracker new
+	tracker := (MTTracker
+		            onMethod: true class >> #ifTrue:
+		            handler: handler)
 		           session: MTSession new;
-		           compiledMethod: true class >> #ifTrue:;
-		           handler: handler;
 		           yourself.
 
 	tracker install.
 
-	self assert:
-		(tracker ifInstalled: [ true ] ifNotInstalled: [ false ]).
+	self assert: tracker isInstalled.
 
 	self assert: (true class methodDict at: #ifTrue:) equals: tracker.
 
@@ -286,7 +282,7 @@ MTHandlerTest >> testCountIfTrueSingleTracker [
 
 	tracker uninstall.
 
-	self deny: (tracker ifInstalled: [ true ] ifNotInstalled: [ false ]).
+	self deny: tracker isInstalled.
 
 	self assert: handler count equals: 0
 ]
@@ -297,16 +293,15 @@ MTHandlerTest >> testCountSelfIfTrueSingleTracker [
 	| tracker handler |
 	handler := MTHandlerCounting new.
 
-	tracker := MTTracker new
+	tracker := (MTTracker
+		            onMethod: self class >> #ifTrue:
+		            handler: handler)
 		           session: MTSession new;
-		           compiledMethod: self class >> #ifTrue:;
-		           handler: handler;
 		           yourself.
 
 	tracker install.
 
-	self assert:
-		(tracker ifInstalled: [ true ] ifNotInstalled: [ false ]).
+	self assert: tracker isInstalled.
 
 	self assert: (self class methodDict at: #ifTrue:) equals: tracker.
 
@@ -314,7 +309,7 @@ MTHandlerTest >> testCountSelfIfTrueSingleTracker [
 
 	tracker uninstall.
 
-	self deny: (tracker ifInstalled: [ true ] ifNotInstalled: [ false ]).
+	self deny: tracker isInstalled.
 
 	self assert: handler count equals: 0
 ]
@@ -326,10 +321,8 @@ MTHandlerTest >> testCountSlowFactorial [
 	handler := MTHandlerCounting new.
 
 	MTSession new
-		add: (MTTracker new
-				 compiledMethod: Integer >> #slowFactorial;
-				 handler: handler;
-				 yourself);
+		add:
+			(MTTracker onMethod: Integer >> #slowFactorial handler: handler);
 		value: [ 5 slowFactorial ].
 
 	self assert: handler count equals: 6
@@ -394,10 +387,10 @@ MTHandlerTest >> testProfileSlowFibonacciMemoing [
 	result := (MTSession withAllImplementations:
 			           { (Number >> #addNumber:) })
 		          do: [ :each | each handler: handlerCounting ];
-		          add: (MTTracker new
-				           compiledMethod: Integer >> #slowFibonacci;
-				           handler: handler;
-				           yourself);
+		          add:
+			          (MTTracker
+				           onMethod: Integer >> #slowFibonacci
+				           handler: handler);
 		          value: [ 10 slowFibonacci ].
 
 	metadata := IdentityDictionary new.

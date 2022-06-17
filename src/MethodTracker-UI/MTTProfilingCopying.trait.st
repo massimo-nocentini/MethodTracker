@@ -16,9 +16,11 @@ MTTProfilingCopying >> compiledMethods: methods wrapping: behaviorBlock then: th
 		                    tree: tree;
 		                    yourself.
 
-	handlerCopying := MTHandlerReceiverArgumentsCopying new
+	"handlerCopying := MTHandlerReceiverArgumentsCopying new
 		                  handler: handlerExecution;
-		                  yourself.
+		                  yourself."
+
+	handlerCopying := handlerExecution.
 
 	result := (MTSession
 		           compiledMethods: methods

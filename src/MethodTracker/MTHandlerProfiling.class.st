@@ -18,7 +18,7 @@ MTHandlerProfiling >> initialize [
 
 	super initialize.
 
-	runWithInMethod := MTTracker >> #run:with:in:.
+	runWithInMethod := MTTracker lookupSelector: #run:with:in:.
 
 	timedReturns := IdentityDictionary new.
 

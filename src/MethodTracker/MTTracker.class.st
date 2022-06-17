@@ -44,18 +44,6 @@ MTTracker >> compiledMethod: aCompiledMethod [
 		selector: aCompiledMethod selector
 ]
 
-{ #category : #private }
-MTTracker >> ifInstalled: iBlock ifNotInstalled: niBlock [
-
-	^ self compiledMethod methodClass methodDict
-		  at: self compiledMethod selector
-		  ifPresent: [ :aMethod | 
-			  aMethod == self
-				  ifTrue: iBlock
-				  ifFalse: niBlock ]
-		  ifAbsent: [ Error signal ]
-]
-
 { #category : #accessing }
 MTTracker >> session: anObject [
 
