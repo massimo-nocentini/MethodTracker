@@ -33,7 +33,7 @@ MTTracker class >> reset [
 { #category : #initialization }
 MTTracker >> compiledMethod [
 
-	^ self wrappedMethod
+	^ self fetchMethod
 ]
 
 { #category : #initialization }

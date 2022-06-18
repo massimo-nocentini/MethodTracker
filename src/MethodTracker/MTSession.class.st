@@ -69,10 +69,7 @@ MTSession class >> withAllImplementations: aCollection [
 { #category : #adding }
 MTSession >> add: aTracker [
 
-	| compiledMethod |
-	compiledMethod := aTracker fetchMethod.
-
-	^ trackers at: compiledMethod ifAbsentPut: [ 
+	^ trackers at: aTracker compiledMethod ifAbsentPut: [ 
 		  aTracker
 			  session: self;
 			  yourself ]
