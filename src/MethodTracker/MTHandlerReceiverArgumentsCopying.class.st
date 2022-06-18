@@ -53,17 +53,13 @@ MTHandlerReceiverArgumentsCopying >> metadata: metadata [
 { #category : #hooks }
 MTHandlerReceiverArgumentsCopying >> run: aSelector with: anArray in: aReceiver context: aContext tracker: aTracker [
 
-	| result message |
-	message := aTracker
-		           withSuspendWrapping: [ 
-			           | messageSend |
-			           messageSend := MessageSend
-				                          receiver: (copier value: aReceiver)
-				                          selector: aSelector
-				                          arguments: (anArray collect: copier).
+	| result message messageSend client clientCopied resultCopied |
+	messageSend := MessageSend
+		               receiver: (copier value: aReceiver)
+		               selector: aSelector
+		               arguments: (anArray collect: copier).
 
-			           table at: aContext put: messageSend ]
-		           context: aContext.
+	message := table at: aContext put: messageSend.
 
 	result := super
 		          run: aSelector
@@ -72,19 +68,15 @@ MTHandlerReceiverArgumentsCopying >> run: aSelector with: anArray in: aReceiver 
 		          context: aContext
 		          tracker: aTracker.
 
-	aTracker
-		withSuspendWrapping: [ 
-			| client clientCopied resultCopied |
-			client := (self parent: aContext ifAbsent: [ Error signal ])
-				          asArgumentsReifiedContext receiver.
+	client := (self parent: aContext ifAbsent: [ Error signal ])
+		          asArgumentsReifiedContext receiver.
 
-			clientCopied := copier value: client.
-			resultCopied := copier value: result.
+	clientCopied := copier value: client.
+	resultCopied := copier value: result.
 
-			table
-				at: aContext
-				put: clientCopied -> (message return: resultCopied) ]
-		context: aContext.
+	table
+		at: aContext
+		put: clientCopied -> (message return: resultCopied).
 
 	^ result
 ]

@@ -37,10 +37,7 @@ MTHandlerSuspendPlugging >> pre: anObject [
 MTHandlerSuspendPlugging >> run: aSelector with: anArray in: aReceiver context: aContext tracker: aTracker [
 
 	| result |
-	aTracker
-		withSuspendWrapping: [ :session | 
-		preBlock cull: session cull: aTracker ]
-		context: aContext.
+	preBlock cull: aTracker session cull: aTracker.
 
 	result := super
 		          run: aSelector
@@ -49,10 +46,7 @@ MTHandlerSuspendPlugging >> run: aSelector with: anArray in: aReceiver context: 
 		          context: aContext
 		          tracker: aTracker.
 
-	aTracker
-		withSuspendWrapping: [ :session | 
-		postBlock cull: session cull: aTracker ]
-		context: aContext.
+	postBlock cull: aTracker session cull: aTracker.
 
 	^ result
 ]

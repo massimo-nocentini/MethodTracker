@@ -21,17 +21,14 @@ MTHandlerSenderPropagating >> initialize [
 { #category : #hooks }
 MTHandlerSenderPropagating >> run: aSelector with: anArray in: aReceiver context: aContext tracker: aTracker [
 
-	aTracker
-		withSuspendWrapping: [ :session | 
-			| tracker additionWitness walkedContext |
-			walkedContext := walkBlock value: aContext.
+	| tracker additionWitness walkedContext |
+	walkedContext := walkBlock value: aContext.
 
-			tracker := MTTracker onMethod: walkedContext handler: self.
+	tracker := MTTracker onMethod: walkedContext handler: self.
 
-			additionWitness := session add: tracker.
+	additionWitness := aTracker session add: tracker.
 
-			additionWitness == tracker ifTrue: [ tracker install ] ]
-		context: aContext.
+	additionWitness == tracker ifTrue: [ tracker install ].
 
 	^ super
 		  run: aSelector

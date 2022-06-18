@@ -10,20 +10,16 @@ Class {
 { #category : #'as yet unclassified' }
 MTHandlerMemoing >> run: aSelector with: anArray in: aReceiver context: aContext tracker: aTracker [
 
-	| key missing value |
-	aTracker
-		withSuspendWrapping: [ 
-			| witness |
-			witness := Object new.
+	| key missing value witness |
+	witness := Object new.
 
-			key := { 
-				       aReceiver.
-				       aSelector } , anArray.
+	key := { 
+		       aReceiver.
+		       aSelector } , anArray.
 
-			value := table at: key ifAbsent: [ witness ].
+	value := table at: key ifAbsent: [ witness ].
 
-			missing := value == witness ]
-		context: aContext.
+	missing := value == witness.
 
 	^ missing
 		  ifTrue: [ 
@@ -34,8 +30,6 @@ MTHandlerMemoing >> run: aSelector with: anArray in: aReceiver context: aContext
 				           context: aContext
 				           tracker: aTracker.
 
-			  aTracker
-				  withSuspendWrapping: [ table at: key put: value ]
-				  context: aContext ]
+			  table at: key put: value ]
 		  ifFalse: [ value ]
 ]

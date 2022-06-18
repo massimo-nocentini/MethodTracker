@@ -45,17 +45,13 @@ MTTracker >> compiledMethod: aCompiledMethod [
 ]
 
 { #category : #accessing }
+MTTracker >> session [
+
+	^ session
+]
+
+{ #category : #accessing }
 MTTracker >> session: anObject [
 
 	session := anObject
-]
-
-{ #category : #evaluation }
-MTTracker >> withSuspendWrapping: aBlock context: aContext [
-
-	"session pushContext: aContext.
-
-	^ [ aBlock cull: session ] ensure: [ session popContext: aContext ]"
-
-	^ aBlock cull: session
 ]

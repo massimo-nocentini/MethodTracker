@@ -28,12 +28,9 @@ MTHandlerObjectCentric >> predicate: anObject [
 MTHandlerObjectCentric >> run: aSelector with: anArray in: aReceiver context: aContext tracker: aTracker [
 
 	| shouldForward |
-	shouldForward := aTracker
-		                 withSuspendWrapping: [ 
-			                 [ predicate value: aReceiver value: anArray ]
-				                 on: MessageNotUnderstood
-				                 do: [ false ] ]
-		                 context: aContext.
+	shouldForward := [ predicate value: aReceiver value: anArray ]
+		                 on: MessageNotUnderstood
+		                 do: [ false ].
 
 	^ shouldForward
 		  ifTrue: [ 
