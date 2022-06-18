@@ -3,12 +3,18 @@ I am able to accept and customize the execution of a (tracked) compiled method.
 "
 Class {
 	#name : #MTHandler,
-	#superclass : #MpHandlerWithContext,
+	#superclass : #MpHandler,
 	#category : #MethodTracker
 }
 
 { #category : #hooks }
 MTHandler >> metadata: metadata [
+]
+
+{ #category : #evaluating }
+MTHandler >> proxy: aMethodProxy [
+
+	self shouldNotImplement
 ]
 
 { #category : #hooks }
