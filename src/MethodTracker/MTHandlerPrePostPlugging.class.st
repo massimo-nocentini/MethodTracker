@@ -4,33 +4,31 @@ I am a handler that allows my subclasses to customize both the pre and post phas
 Class {
 	#name : #MTHandlerPrePostPlugging,
 	#superclass : #MTHandler,
-	#traits : 'TMpHandlerWithContext',
-	#classTraits : 'TMpHandlerWithContext classTrait',
 	#category : #MethodTracker
 }
 
 { #category : #'as yet unclassified' }
-MTHandlerPrePostPlugging >> afterExecutionWithReceiver: receiver arguments: arguments returnValue: aReturnValue carry: carry context: aContext [
+MTHandlerPrePostPlugging >> afterExecutionOf: aSelector inReceiver: receiver arguments: arguments returnValue: aReturnValue carry: carry context: aContext [
 
 	^ self
-		  run: proxy selector
+		  run: aSelector
 		  with: arguments
 		  in: receiver
 		  postContext: aContext
-		  tracker: proxy
+		  tracker: nil
 		  carry: carry
 		  return: aReturnValue
 ]
 
 { #category : #'as yet unclassified' }
-MTHandlerPrePostPlugging >> beforeExecutionWithReceiver: receiver arguments: arguments context: aContext [
+MTHandlerPrePostPlugging >> beforeExecutionOf: aSelector inReceiver: receiver arguments: arguments context: aContext [
 
 	^ self
-		  run: proxy selector
+		  run: aSelector
 		  with: arguments
 		  in: receiver
 		  preContext: aContext
-		  tracker: proxy
+		  tracker: nil
 ]
 
 { #category : #'as yet unclassified' }

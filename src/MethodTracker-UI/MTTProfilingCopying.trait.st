@@ -30,7 +30,7 @@ MTTProfilingCopying >> compiledMethods: methods wrapping: behaviorBlock then: th
 
 	metadata := IdentityDictionary new.
 
-	handlerExecution metadata: metadata.
+	"handlerExecution metadata: metadata."
 	handlerCopying metadata: metadata.
 
 	observed := MTObservedDataset new
