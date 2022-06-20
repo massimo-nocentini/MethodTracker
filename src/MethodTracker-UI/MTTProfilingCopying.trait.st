@@ -12,13 +12,9 @@ MTTProfilingCopying >> compiledMethods: methods wrapping: behaviorBlock then: th
 	| result tree handlerExecution handlerCopying metadata observed |
 	tree := MTContextsTree new.
 
-	handlerExecution := MTHandlerProfiling new
+	handlerExecution := MTHandlerCopyingProfiling new
 		                    tree: tree;
 		                    yourself.
-
-	"handlerCopying := MTHandlerReceiverArgumentsCopying new
-		                  handler: handlerExecution;
-		                  yourself."
 
 	handlerCopying := handlerExecution.
 
@@ -30,7 +26,6 @@ MTTProfilingCopying >> compiledMethods: methods wrapping: behaviorBlock then: th
 
 	metadata := IdentityDictionary new.
 
-	"handlerExecution metadata: metadata."
 	handlerCopying metadata: metadata.
 
 	observed := MTObservedDataset new
