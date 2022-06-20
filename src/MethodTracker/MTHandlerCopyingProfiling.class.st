@@ -22,6 +22,7 @@ MTHandlerCopyingProfiling >> initialize [
 
 	super initialize.
 
+	table := Dictionary new.
 	self copyBlock: [ :each | each copy ]
 ]
 
