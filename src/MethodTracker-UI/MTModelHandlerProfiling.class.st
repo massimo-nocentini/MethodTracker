@@ -16,7 +16,7 @@ Class {
 		'reifiedContext',
 		'client'
 	],
-	#category : #MethodTracker
+	#category : #'MethodTracker-UI'
 }
 
 { #category : #accessing }

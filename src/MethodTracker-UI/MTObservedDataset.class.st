@@ -8,7 +8,7 @@ Class {
 		'tree',
 		'metadata'
 	],
-	#category : #MethodTracker
+	#category : #'MethodTracker-UI'
 }
 
 { #category : #accessing }

@@ -13,7 +13,7 @@ Class {
 		'clients',
 		'receivers'
 	],
-	#category : #MethodTracker
+	#category : #'MethodTracker-UI'
 }
 
 { #category : #accessing }

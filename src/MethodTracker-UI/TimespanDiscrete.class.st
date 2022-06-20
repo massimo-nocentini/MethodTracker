@@ -1,3 +1,6 @@
+"
+I am a variant that specilizes the span to be discrete and not continous as my superclass does.
+"
 Class {
 	#name : #TimespanDiscrete,
 	#superclass : #Timespan,
