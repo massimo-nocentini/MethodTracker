@@ -10,28 +10,24 @@ MpCountingMethodProxyTest >> testInversions [
 
 	[ "Setting up."
 	proxies add: (self proxyClass
-			 on: #inversions:
-			 inClass: SequenceableCollection
+			 onMethod: SequenceableCollection >> #inversions:
 			 handler: self handlerClass new).
 
 	proxies add: (self proxyClass
-			 on: #merge:sortBlock:on:inversionsOrNil:
-			 inClass: PositionableStream
+			 onMethod:
+			 PositionableStream >> #merge:sortBlock:on:inversionsOrNil:
 			 handler: self handlerClass new).
 
 	proxies add: (self proxyClass
-			 on: #bisect:baseBlock:
-			 inClass: SequenceableCollection
+			 onMethod: SequenceableCollection >> #bisect:baseBlock:
 			 handler: self handlerClass new).
 
 	proxies add: (self proxyClass
-			 on: #bisect:from:to:baseBlock:
-			 inClass: SequenceableCollection
+			 onMethod: SequenceableCollection >> #bisect:from:to:baseBlock:
 			 handler: self handlerClass new).
 
 	proxies add: (self proxyClass
-			 on: #nextPut:inversion:
-			 inClass: Stream
+			 onMethod: Stream >> #nextPut:inversion:
 			 handler: self handlerClass new).
 
 	"Install."
