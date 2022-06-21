@@ -10,21 +10,6 @@ Class {
 }
 
 { #category : #hooks }
-MTHandler >> afterExecutionOf: aSelector inReceiver: anObject arguments: anArrayOfObjects returnValue: aReturnValue carry: carry context: aContext [
-
-	^ self
-		  afterExecutionWithReceiver: anObject
-		  arguments: anArrayOfObjects
-		  returnValue: aReturnValue
-]
-
-{ #category : #hooks }
-MTHandler >> beforeExecutionOf: aSelector inReceiver: receiver arguments: arguments context: aContext [
-
-	^ self beforeExecutionWithReceiver: receiver arguments: arguments
-]
-
-{ #category : #hooks }
 MTHandler >> metadata: metadata [
 ]
 
