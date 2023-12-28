@@ -2,8 +2,8 @@
 I am a presenter that collects data about an instrumented computation via method trackers.
 "
 Class {
-	#name : #MTOverviewSpPresenter,
-	#superclass : #SpPresenter,
+	#name : 'MTOverviewSpPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'sequenceDiagramPresenter',
 		'treePresenter',
@@ -14,10 +14,11 @@ Class {
 		'exportButton',
 		'umlSequenceDiagramBuilder'
 	],
-	#category : #'MethodTracker-UI'
+	#category : 'MethodTracker-UI',
+	#package : 'MethodTracker-UI'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTOverviewSpPresenter >> connectPresenters [
 
 	treePresenter whenTreeShownChangedDo: [ :treeShown | 
@@ -39,7 +40,7 @@ MTOverviewSpPresenter >> connectPresenters [
 			export ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTOverviewSpPresenter >> initializePresenters [
 
 	| outerLayout innerLayout |
@@ -112,7 +113,7 @@ MTOverviewSpPresenter >> initializePresenters [
 	self layout: outerLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTOverviewSpPresenter >> initializeWindow: aWindow [
 
 	aWindow
@@ -137,7 +138,7 @@ MTOverviewSpPresenter >> initializeWindow: aWindow [
 						 nextPutAll: ' duration.' ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTOverviewSpPresenter >> setModelBeforeInitialization: observedData [
 
 	tree := observedData tree.
@@ -145,7 +146,7 @@ MTOverviewSpPresenter >> setModelBeforeInitialization: observedData [
 	tableItems := observedData statistics values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MTOverviewSpPresenter >> umlSequenceDiagramBuilder: aBuilder [
 
 	umlSequenceDiagramBuilder := aBuilder

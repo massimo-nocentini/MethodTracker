@@ -1,38 +1,39 @@
 Class {
-	#name : #TimespanDiscrete,
-	#superclass : #Timespan,
+	#name : 'TimespanDiscrete',
+	#superclass : 'Timespan',
 	#instVars : [
 		'logicalStart',
 		'logicalDuration'
 	],
-	#category : #'MethodTracker-UI'
+	#category : 'MethodTracker-UI',
+	#package : 'MethodTracker-UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimespanDiscrete >> logicalDuration [
 
 	^ logicalDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimespanDiscrete >> logicalDuration: anObject [
 
 	logicalDuration := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimespanDiscrete >> logicalEnd [
 
 	^ self logicalStart + self logicalDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimespanDiscrete >> logicalStart [
 
 	^ logicalStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimespanDiscrete >> logicalStart: anObject [
 
 	logicalStart := anObject

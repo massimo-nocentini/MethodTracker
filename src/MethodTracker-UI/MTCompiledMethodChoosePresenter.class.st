@@ -2,8 +2,8 @@
 I am a presenter that allows a fine-grain selection of compiled methods.
 "
 Class {
-	#name : #MTCompiledMethodChoosePresenter,
-	#superclass : #SpPresenter,
+	#name : 'MTCompiledMethodChoosePresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'listPresenter',
 		'codePresenter',
@@ -14,10 +14,11 @@ Class {
 		'selectorPresenter',
 		'recipientListPresenter'
 	],
-	#category : #'MethodTracker-UI'
+	#category : 'MethodTracker-UI',
+	#package : 'MethodTracker-UI'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTCompiledMethodChoosePresenter >> initializePresenters [
 
 	| innerLayout outerLayout packages compiledMethodSortingBlock |
@@ -165,7 +166,7 @@ MTCompiledMethodChoosePresenter >> initializePresenters [
 	self layout: outerLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTCompiledMethodChoosePresenter >> initializeWindow: aWindow [
 
 	aWindow

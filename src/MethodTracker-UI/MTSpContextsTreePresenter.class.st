@@ -2,8 +2,8 @@
 I am a presenter that reifies the tree of contexts with interpolation of clients, receivers, arguments and returned objects.
 "
 Class {
-	#name : #MTSpContextsTreePresenter,
-	#superclass : #SpPresenter,
+	#name : 'MTSpContextsTreePresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'treePresenter',
 		'tree',
@@ -16,10 +16,11 @@ Class {
 		'collapseAllButton',
 		'showDetailsButton'
 	],
-	#category : #'MethodTracker-UI'
+	#category : 'MethodTracker-UI',
+	#package : 'MethodTracker-UI'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTSpContextsTreePresenter >> asStringContext: each [
 
 	| reifiedContext model |
@@ -65,7 +66,7 @@ MTSpContextsTreePresenter >> asStringContext: each [
 				  nextPutAll: model return asString ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTSpContextsTreePresenter >> connectPresenters [
 
 	| treeRefreshDisplayBlock |
@@ -86,7 +87,7 @@ MTSpContextsTreePresenter >> connectPresenters [
 	returnCheckbox whenChangedDo: treeRefreshDisplayBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTSpContextsTreePresenter >> initializePresenters [
 
 	expandAllButton := self newButton
@@ -139,7 +140,7 @@ MTSpContextsTreePresenter >> initializePresenters [
 			 yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTSpContextsTreePresenter >> openDetailsWithSpec [
 
 	| presenter |
@@ -181,14 +182,14 @@ MTSpContextsTreePresenter >> openDetailsWithSpec [
 	presenter openWithSpec
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTSpContextsTreePresenter >> setModelBeforeInitialization: treeMetadataAssociation [
 
 	tree := treeMetadataAssociation key.
 	metadata := treeMetadataAssociation value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MTSpContextsTreePresenter >> whenTreeShownChangedDo: aBlock [
 
 	^ treePresenter whenSelectionChangedDo: [ :selectedItem | 

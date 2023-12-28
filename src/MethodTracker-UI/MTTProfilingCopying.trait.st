@@ -2,11 +2,12 @@
 I am a trait that assemble instrumentation using profiling with copying.
 "
 Trait {
-	#name : #MTTProfilingCopying,
-	#category : #'MethodTracker-UI'
+	#name : 'MTTProfilingCopying',
+	#category : 'MethodTracker-UI',
+	#package : 'MethodTracker-UI'
 }
 
-{ #category : #collecting }
+{ #category : 'collecting' }
 MTTProfilingCopying >> compiledMethods: methods wrapping: behaviorBlock then: thenBlock [
 
 	| result tree handlerExecution handlerCopying metadata observed |

@@ -1,6 +1,6 @@
-Extension { #name : #SpCodePresenter }
+Extension { #name : 'SpCodePresenter' }
 
-{ #category : #'*MethodTracker-UI' }
+{ #category : '*MethodTracker-UI' }
 SpCodePresenter >> evaluateCompiledMethod [
 
 	^ [ 

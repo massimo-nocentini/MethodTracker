@@ -2,12 +2,13 @@
 I am a variant of order-preserving tree that provides a shape representation as sequence diagrams.
 "
 Class {
-	#name : #MTContextsTree,
-	#superclass : #CTOrderPreservingTree,
-	#category : #'MethodTracker-UI'
+	#name : 'MTContextsTree',
+	#superclass : 'CTOrderPreservingTree',
+	#category : 'MethodTracker-UI',
+	#package : 'MethodTracker-UI'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MTContextsTree >> asShapeUMLSequenceDiagram: aBuilder metadata: metadata [
 
 	| timedMessageSends objectsSeenSoFar |
