@@ -1,24 +1,25 @@
 Class {
-	#name : #MTVisualizationsTest,
-	#superclass : #TestCase,
+	#name : 'MTVisualizationsTest',
+	#superclass : 'TestCase',
 	#traits : 'TIceImagesExporting + MTTProfilingCopying + MTTUmlSequenceDiagramBuilderWithOutliners',
 	#classTraits : 'TIceImagesExporting classTrait + MTTProfilingCopying classTrait + MTTUmlSequenceDiagramBuilderWithOutliners classTrait',
-	#category : #'MethodTracker-Visualizations'
+	#category : 'MethodTracker-Visualizations',
+	#package : 'MethodTracker-Visualizations'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> sutSequenceableCollectionEstrinInit [
 
 	^ { 1. 3. 5. 6. 9 } estrin: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> sutSequenceableCollectionHornerInit [
 
 	^ { 1. 3. 5. 6 } hornerBase10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testHeapWithAll [
 
 	^ self
@@ -57,7 +58,7 @@ MTVisualizationsTest >> testHeapWithAll [
 				  equals: #( 1 2 7 3 4 8 11 9 5 6 10 15 17 12 19 20 14 16 13 18 ) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectFactorialRecursive [
 
 	| n |
@@ -107,7 +108,7 @@ MTVisualizationsTest >> testInspectFactorialRecursive [
 			  self exportSlotsGraphOf: factorial ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectInversions [
 
 	^ self
@@ -155,7 +156,7 @@ MTVisualizationsTest >> testInspectInversions [
 			  self exportSlotsGraphOf: inversions ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectInversionsReversed [
 
 	^ self
@@ -210,7 +211,7 @@ MTVisualizationsTest >> testInspectInversionsReversed [
 			  self exportSlotsGraphOf: inversions ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectKaratsuba42FactorialSquaredProfiled [
 
 	| m |
@@ -219,7 +220,7 @@ MTVisualizationsTest >> testInspectKaratsuba42FactorialSquaredProfiled [
 	^ self
 		  compiledMethods: { (Integer >> #karatsuba:base:) }
 		  wrapping: [ m karatsuba: m base: 10 ]
-		  then: [ :large :observedData | 
+		  then: [ :large :observedData |
 			  | presenter tree builder nBits leaves |
 			  tree := observedData tree.
 
@@ -234,14 +235,15 @@ MTVisualizationsTest >> testInspectKaratsuba42FactorialSquaredProfiled [
 			  nBits := (m numberOfDigitsInBase: 10) + 1.
 
 			  leaves := 0.
-			  tree children keysAndValuesDo: [ :aNode :children | 
+			  tree children keysAndValuesDo: [ :aNode :children |
 				  leaves := leaves + children isEmpty asBit ].
 
 			  self
 				  assert: tree size equals: 1264;
 				  assert: tree size - leaves equals: 421;
 				  assert: nBits equals: 53;
-				  assert: (nBits ** (3 log: 2)) ceiling equals: 541;
+				  assert: (nBits ** (3 log: 2)) ceiling
+				  equals: Number firstCarmichaelNumber;
 				  assert: large equals: m * m.
 
 			  self exportSlotsGraphOf: large "
@@ -251,7 +253,7 @@ MTVisualizationsTest >> testInspectKaratsuba42FactorialSquaredProfiled [
 					  presenter currentCanvas: aCanvas ];" ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectLargeIntegerProfiled [
 
 	| m n |
@@ -292,7 +294,7 @@ MTVisualizationsTest >> testInspectLargeIntegerProfiled [
 			  self exportSlotsGraphOf: large ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectLargeIntegerQuickProfiled [
 
 	| m n |
@@ -333,7 +335,7 @@ MTVisualizationsTest >> testInspectLargeIntegerQuickProfiled [
 			  self exportSlotsGraphOf: large ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectLargeIntegerSlowProfiled [
 
 	| m n |
@@ -374,25 +376,25 @@ MTVisualizationsTest >> testInspectLargeIntegerSlowProfiled [
 			  self exportSlotsGraphOf: large ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectProbabilisticMedian [
 
 	| n random collection |
 	n := 20.
-	random := Random seed: 541.
+	random := Random seed: Number firstCarmichaelNumber.
 	collection := OrderedCollection new.
 	1 to: n do: [ :i | collection add: (random nextInteger: n) ].
 
 	^ self
-		  compiledMethods: { 
+		  compiledMethods: {
 				  (SequenceableCollection >> #kth:ranking:atRandom:).
 				  (SequenceableCollection >> #atRandom:) }
-		  wrapping: [ 
+		  wrapping: [
 			  collection
 				  kth: (n / 2) floor
 				  ranking: [ :each :pivot | each < pivot ]
 				  atRandom: random ]
-		  then: [ :median :observedData | 
+		  then: [ :median :observedData |
 			  | presenter tree builder |
 			  tree := observedData tree.
 
@@ -410,7 +412,7 @@ MTVisualizationsTest >> testInspectProbabilisticMedian [
 
 			  self
 				  exportShapeOf: tree
-				  accessorBlock: [ :aTree | 
+				  accessorBlock: [ :aTree |
 					  aTree
 						  asShapeUMLSequenceDiagram: builder
 						  metadata: observedData metadata ]
@@ -422,7 +424,7 @@ MTVisualizationsTest >> testInspectProbabilisticMedian [
 				  exportSlotsGraphOf: collection sorted pathSuffix: 'sorted' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectProductTo [
 
 	| n |
@@ -461,7 +463,7 @@ MTVisualizationsTest >> testInspectProductTo [
 			  self exportSlotsGraphOf: factorial ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testInspectProductToPropagating [
 
 	| n factorial tree handlerExecution handlerCopying metadata presenter handlerPropagating observedData builder |
@@ -517,7 +519,7 @@ MTVisualizationsTest >> testInspectProductToPropagating [
 	self exportSlotsGraphOf: factorial
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testMoveToFrontIfNone [
 
 	| l l1 l2 |
@@ -568,7 +570,7 @@ MTVisualizationsTest >> testMoveToFrontIfNone [
 				  exportSlotsGraphOf: l3 pathSuffix: 'none' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testProfileSlowExplicitFibonacciTailWithAdd [
 
 	^ self
@@ -603,7 +605,7 @@ MTVisualizationsTest >> testProfileSlowExplicitFibonacciTailWithAdd [
 				  pathSuffix: 'sequence-diagram' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testProfileSlowFibonacciMemoingWithAdd [
 
 	^ self
@@ -636,7 +638,7 @@ MTVisualizationsTest >> testProfileSlowFibonacciMemoingWithAdd [
 				  pathSuffix: 'sequence-diagram' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testProfileSlowFibonacciTailWithAdd [
 
 	^ self
@@ -669,7 +671,7 @@ MTVisualizationsTest >> testProfileSlowFibonacciTailWithAdd [
 				  pathSuffix: 'sequence-diagram' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testProfileSlowFibonacciWithAdd [
 
 	^ self
@@ -702,7 +704,7 @@ MTVisualizationsTest >> testProfileSlowFibonacciWithAdd [
 				  pathSuffix: 'sequence-diagram' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testProfileSlowFibonacciWithAddOnly [
 
 	^ self
@@ -733,7 +735,7 @@ MTVisualizationsTest >> testProfileSlowFibonacciWithAddOnly [
 				  pathSuffix: 'sequence-diagram' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testSequenceableCollectionEstrinInit [
 
 	^ self
@@ -769,7 +771,7 @@ MTVisualizationsTest >> testSequenceableCollectionEstrinInit [
 			  self exportSlotsGraphOf: result ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testSequenceableCollectionHornerInit [
 
 	^ self
@@ -805,7 +807,7 @@ MTVisualizationsTest >> testSequenceableCollectionHornerInit [
 			  self exportSlotsGraphOf: result ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testSequenceableCollectionMergeSortCopying [
 
 	| anArray |
@@ -836,7 +838,7 @@ MTVisualizationsTest >> testSequenceableCollectionMergeSortCopying [
 				  assert: result equals: (1 to: 20) asArray ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testSequenceableCollectionMergeSortCopyingDetailed [
 
 	^ self
@@ -869,7 +871,7 @@ MTVisualizationsTest >> testSequenceableCollectionMergeSortCopyingDetailed [
 				  assert: result equals: (1 to: 20) asArray ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testSequenceableCollectionMergeSortPlugging [
 
 	| tree metadata result handlerExecution handlerBlockPlugging observedData |
@@ -916,7 +918,7 @@ MTVisualizationsTest >> testSequenceableCollectionMergeSortPlugging [
 		assert: result equals: (1 to: 20) asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MTVisualizationsTest >> testSequenceableCollectionMergeSortWithoutCopying [
 
 	| tree result handlerExecution metadata observedData |

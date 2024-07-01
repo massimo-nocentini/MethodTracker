@@ -1,1 +1,1 @@
-Package { #name : #'MethodTracker-Visualizations' }
+Package { #name : 'MethodTracker-Visualizations' }

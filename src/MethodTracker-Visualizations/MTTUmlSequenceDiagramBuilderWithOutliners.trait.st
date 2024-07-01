@@ -2,11 +2,12 @@
 I am a trait that provides a UML sequence diagram builder configured to use outliners as shapes for objects.
 "
 Trait {
-	#name : #MTTUmlSequenceDiagramBuilderWithOutliners,
-	#category : #'MethodTracker-Visualizations'
+	#name : 'MTTUmlSequenceDiagramBuilderWithOutliners',
+	#category : 'MethodTracker-Visualizations',
+	#package : 'MethodTracker-Visualizations'
 }
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 MTTUmlSequenceDiagramBuilderWithOutliners >> umlSequenceDiagramBuilder: aBuilder [
 
 	| slotsVisitor block |
